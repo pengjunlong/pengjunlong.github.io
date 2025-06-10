@@ -1,0 +1,24 @@
+<div class="grid__wrapper" id="subsites-container">
+    <!-- 初始静态内容 (JS加载失败时显示) -->
+    {% for item in site.subsites %}
+    <div class="grid__item">
+        <a href="{{ item.url | relative_url }}" class="archive__item">
+            <div class="archive__item-body">
+                <div class="archive__item-title">
+                    <i class="{{ item.icon }} fa-fw"></i> {{ item.displayName }}
+                </div>
+                <div class="archive__item-excerpt">
+                    <p>{{ item.description }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- 加载状态 -->
+<div id="subsites-loading" class="notice--info text-center">
+    <i class="fas fa-spinner fa-spin"></i> 正在加载子站点...
+</div>
+
+<script src="{{ '/assets/js/subsites-loader.js' | relative_url }}"></script>

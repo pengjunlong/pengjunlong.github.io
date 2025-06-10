@@ -1,0 +1,48 @@
+# 基础配置
+title: "我的知识库"
+url: "https://pengjunlong.github.io"
+baseurl: ""
+remote_theme: mmistakes/minimal-mistakes
+
+# 作者信息
+author:
+  name: "彭俊龙"
+  github: "pengjunlong"
+
+# 导航配置
+navigation:
+  main:
+    - title: "首页"
+      url: "/"
+    - title: "博客"
+      url: "/blog/"
+    - title: "项目"
+      url: "/projects/"
+
+# 子站点默认配置 (可选，用于JS加载失败时)
+subsites:
+  - displayName: "技术博客"
+    url: "/blog/"
+    icon: "fas fa-code"
+    description: "技术文章与教程"
+  - displayName: "开源项目"
+    url: "/projects/"
+    icon: "fas fa-rocket"
+    description: "代码仓库与演示"
+
+# 主题设置
+minimal_mistakes_skin: "default"
+search: true
+comments:
+  provider: false
+
+# 构建设置
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-include-cache
+
+exclude:
+  - "node_modules"
+  - "Gemfile*"
+  - "vendor"
