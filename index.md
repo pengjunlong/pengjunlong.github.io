@@ -1,5 +1,6 @@
 ---
 layout: home
+author_profile: true
 title: "Hello, World!"
 feature_row:
   - title: "最新文章"
