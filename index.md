@@ -10,7 +10,5 @@ feature_row:
     btn_label: "阅读更多"
 ---
 
-## 猜你喜欢
-
 {% include subsites-nav.html %}
 
