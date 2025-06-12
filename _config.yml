@@ -28,7 +28,7 @@ subsites:
     description: "代码仓库与演示"
 
 # 主题设置
-minimal_mistakes_skin: "default"
+minimal_mistakes_skin: dark
 search: true
 comments:
   provider: false
