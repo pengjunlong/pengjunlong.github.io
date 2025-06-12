@@ -1,6 +1,6 @@
 ---
 layout: home
-title: "欢迎访问我的主页"
+title: "Hello, World!"
 feature_row:
   - title: "最新文章"
     excerpt: "查看最新技术分享"
@@ -9,8 +9,7 @@ feature_row:
     btn_label: "阅读更多"
 ---
 
-## 我的子站点
+## 猜你喜欢
 
 {% include subsites-nav.html %}
 
-{% include feature_row %}
