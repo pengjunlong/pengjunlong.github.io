@@ -87,9 +87,10 @@ seo:
 
 # 分析统计
 analytics:
-  provider: "google"    # 分析服务(google, custom)
+  provider: "google"
   google:
-    tracking_id: "UA-43024673-1" # Google Analytics ID
+    tracking_id: "G-CZK4CWTZ59"
+
 
 # 社交分享
 share: true             # 启用分享按钮
