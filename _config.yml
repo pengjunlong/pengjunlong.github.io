@@ -24,7 +24,7 @@ include_cache:
 
 
 # 主题配置
-remote_theme: mmistakes/minimal-mistakes@4.24.0
+remote_theme: mmistakes/minimal-mistakes
 minimal_mistakes_skin: "dark" # 皮肤(default, air, dark等)
 
 # 导航栏配置
