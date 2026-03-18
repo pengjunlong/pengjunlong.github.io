@@ -1,0 +1,97 @@
+# 站点基本信息
+title: "九头鸟龙"          # 站点标题，影响所有页面的<title>标签和页眉显示
+name: "pengjunlong"              # 站点所有者名称，影响作者信息区域
+description: "落霞与孤鹜齐飞，秋水共长天一色"    # 站点描述，影响<meta description>和SEO
+url: "https://pengjunlong.github.io" # 站点URL，影响所有绝对链接
+baseurl: ""          # 站点子路径，影响资源路径
+
+# 构建设置
+plugins:                # 插件列表
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-include-cache
+exclude:                # 排除文件/目录
+  - "node_modules"
+  - "Gemfile.lock"
+include:                # 包含特殊文件
+  - ".htaccess"
+keep_files:             # 保留文件
+  - ".gitignore"
+include_cache:
+  enabled: true # 全局开关
+  path: "_cache" # 缓存目录
+  expires: 3600 # 缓存有效期(秒)
+
+
+# 主题配置
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: "dark" # 皮肤(default, air, dark等)
+
+# 导航栏配置
+# 主导航
+defaults:
+  - scope:
+      path: "" # 所有页面
+    values:
+      layout: "single"
+      author_profile: true
+# 顶部导航菜单
+navigation:
+  main:
+    - title: "首页"
+      url: "/"
+    - title: "关于"
+      url: "/about/"
+
+# 作者信息
+author:
+  name: "Junlong Peng"
+  avatar: "https://avatars.githubusercontent.com/u/1436509?v=4" # 作者头像
+  bio: "数风流人物千里共婵娟"                     # 作者简介
+  location: "北京"                      # 位置
+  email: ""         # 邮箱
+  links:                                # 社交链接
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/pengjunlong"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://google.com"
+
+footer:
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/"
+
+# 分页配置
+paginate: 5             # 每页显示文章数
+paginate_path: "/blog/page:num" # 分页路径格式
+
+# 搜索功能
+search: true            # 启用搜索
+search_provider: "lunr" # 搜索提供者(lunr, algolia)
+
+# SEO优化
+seo:
+  title: true           # 自动生成SEO标题
+  title_separator: "-"  # 标题分隔符
+  description: true     # 使用页面描述
+  author: true          # 包含作者信息
+
+# 分析统计
+analytics:
+  provider: "google"
+  google:
+    tracking_id: "G-CZK4CWTZ59"
+
+
+# 社交分享
+share: true             # 启用分享按钮
+share_provider: "addtoany" # 分享服务
