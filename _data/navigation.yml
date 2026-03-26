@@ -1,5 +1,9 @@
 main:
-  - title: "Posts"
+  - title: "🏠 首页"
     url: /
-  - title: "About"
+  - title: "📚 博客"
+    url: /blog/
+  - title: "🚀 子站点"
+    url: /#subsites
+  - title: "👤 关于"
     url: /about/

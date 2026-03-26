@@ -1,24 +1,89 @@
-<div class="grid__wrapper" id="subsites-container">
-    <!-- 初始静态内容 (JS加载失败时显示) -->
-    {% for item in site.subsites %}
-    <div class="grid__item">
-        <a href="{{ item.url | relative_url }}" class="archive__item">
-            <div class="archive__item-body">
-                <div class="archive__item-title">
-                    <i class="{{ item.icon }} fa-fw"></i> {{ item.displayName }}
-                </div>
-                <div class="archive__item-excerpt">
-                    <p>{{ item.description }}</p>
-                </div>
-            </div>
-        </a>
-    </div>
-    {% endfor %}
-</div>
+<!-- ===== 子站点导航区域 ===== -->
+<section id="subsites" class="subsites-section">
+  <div class="subsites-header">
+    <h2 class="subsites-title">
+      <span class="subsites-title-icon">🚀</span>
+      我的站点导航
+    </h2>
+    <p class="subsites-subtitle">探索更多精彩内容，点击卡片即可跳转</p>
+  </div>
 
-<!-- 加载状态 -->
-<div id="subsites-loading" class="notice--info text-center">
-    <i class="fas fa-spinner fa-spin"></i> 正在加载子站点...
-</div>
+  <!-- 搜索 & 过滤工具栏 -->
+  <div class="subsites-toolbar">
+    <div class="subsites-search-wrap">
+      <i class="fas fa-search subsites-search-icon"></i>
+      <input
+        type="text"
+        id="subsite-search"
+        class="subsites-search"
+        placeholder="搜索站点名称或描述..."
+        autocomplete="off"
+      />
+      <button id="subsite-search-clear" class="subsites-search-clear" title="清除" style="display:none">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="subsites-filter-tags" id="subsite-tag-filters">
+      <button class="tag-btn tag-btn--active" data-tag="all">全部</button>
+      <!-- 标签由 JS 动态注入 -->
+    </div>
+
+    <div class="subsites-sort">
+      <label for="subsite-sort" class="subsites-sort-label">
+        <i class="fas fa-sort"></i>
+      </label>
+      <select id="subsite-sort" class="subsites-sort-select">
+        <option value="default">默认排序</option>
+        <option value="name">按名称</option>
+        <option value="updated">最近更新</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 子站点卡片网格 -->
+  <div class="subsites-grid" id="subsites-container">
+    <!-- 静态备用内容：Jekyll 模板渲染（JS 加载失败时可见） -->
+    {% for item in site.subsites %}
+    <a href="{{ item.url | relative_url }}" class="subsite-card" data-tags="{{ item.tags | join: ',' }}" data-name="{{ item.displayName }}">
+      <div class="subsite-card__icon">{{ item.icon }}</div>
+      <div class="subsite-card__body">
+        <h3 class="subsite-card__title">{{ item.displayName }}</h3>
+        <p class="subsite-card__desc">{{ item.description }}</p>
+        <div class="subsite-card__tags">
+          {% for tag in item.tags %}
+          <span class="subsite-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="subsite-card__arrow"><i class="fas fa-arrow-right"></i></div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- 空状态提示 -->
+  <div id="subsites-empty" class="subsites-empty" style="display:none">
+    <i class="fas fa-search"></i>
+    <p>没有找到匹配的站点</p>
+    <button onclick="resetSubsiteFilters()" class="btn btn--primary btn--small">重置筛选</button>
+  </div>
+
+  <!-- 加载状态 -->
+  <div id="subsites-loading" class="subsites-loading">
+    <div class="subsites-loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <p>正在发现子站点...</p>
+  </div>
+
+  <!-- 错误提示 -->
+  <div id="subsites-error" class="subsites-error" style="display:none">
+    <i class="fas fa-exclamation-circle"></i>
+    <p id="subsites-error-msg">加载失败</p>
+    <button id="subsites-retry" class="btn btn--warning btn--small">
+      <i class="fas fa-redo"></i> 重试
+    </button>
+  </div>
+</section>
 
 <script src="{{ '/assets/js/subsites-loader.js' | relative_url }}"></script>

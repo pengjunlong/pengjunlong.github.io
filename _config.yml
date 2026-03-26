@@ -25,23 +25,27 @@ include_cache:
 
 # 主题配置
 remote_theme: mmistakes/minimal-mistakes
-minimal_mistakes_skin: "dark" # 皮肤(default, air, dark等)
+minimal_mistakes_skin: "air" # 明亮欢快皮肤: air(蓝色清新), sunrise(暖橙), aqua(青色), neon(霓虹)
 
-# 导航栏配置
-# 主导航
+# 自定义样式覆盖
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# 头部自定义脚本/样式（通过 head_scripts 注入）
+head_scripts:
+  - /assets/css/custom.css
+
+# 默认布局
 defaults:
   - scope:
       path: "" # 所有页面
     values:
       layout: "single"
       author_profile: true
-# 顶部导航菜单
-navigation:
-  main:
-    - title: "首页"
-      url: "/"
-    - title: "关于"
-      url: "/about/"
+
+# 顶部导航菜单（引用 _data/navigation.yml 中的 main 键）
+# navigation 配置已移至 _data/navigation.yml
 
 # 作者信息
 author:
@@ -56,19 +60,13 @@ author:
       url: "https://github.com/pengjunlong"
     - label: "Website"
       icon: "fas fa-fw fa-link"
-      url: "https://google.com"
+      url: "https://pengjunlong.github.io"
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+      url: "https://github.com/pengjunlong"
 
 # 分页配置
 paginate: 5             # 每页显示文章数
@@ -77,6 +75,7 @@ paginate_path: "/blog/page:num" # 分页路径格式
 # 搜索功能
 search: true            # 启用搜索
 search_provider: "lunr" # 搜索提供者(lunr, algolia)
+search_full_content: true
 
 # SEO优化
 seo:
@@ -91,7 +90,16 @@ analytics:
   google:
     tracking_id: "G-CZK4CWTZ59"
 
-
 # 社交分享
 share: true             # 启用分享按钮
 share_provider: "addtoany" # 分享服务
+
+# 子站点扩展规范
+# 每个子仓库根目录放置 subsite-config.json，格式如下：
+# {
+#   "displayName": "站点名称",
+#   "description": "站点简介",
+#   "icon": "fas fa-rocket",     (Font Awesome 图标类名)
+#   "tags": ["分类1", "分类2"],
+#   "color": "#FF6B6B"            (可选：卡片主题色)
+# }
