@@ -10,7 +10,7 @@ header:
 feature_row:
   - image_path: ""
     title: "📝 技术博客"
-    excerpt: "记录代码人生，分享技术心得与工程实践"
+    excerpt: "Think twice, code once."
     url: "/blog/"
     btn_class: "btn--primary"
     btn_label: "阅读更多 →"
@@ -22,7 +22,7 @@ feature_row:
     btn_label: "探索站点 →"
   - image_path: ""
     title: "👤 关于我"
-    excerpt: "数风流人物千里共婵娟，来了解一个真实的程序员"
+    excerpt: "todo"
     url: "/about/"
     btn_class: "btn--primary"
     btn_label: "了解更多 →"
