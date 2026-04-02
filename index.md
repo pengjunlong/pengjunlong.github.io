@@ -1,7 +1,7 @@
 ---
 layout: home
 author_profile: true
-title: "你好，世界 👋"
+title: "你好，世界 😎"
 excerpt: "落霞与孤鹜齐飞，秋水共长天一色"
 header:
   overlay_image: ""

@@ -48,12 +48,8 @@ author:
   name: "Junlong Peng"
   avatar: "https://avatars.githubusercontent.com/u/1436509?v=4" # 作者头像
   bio: "数风流人物千里共婵娟"                     # 作者简介
-  location: "北京"                      # 位置
-  email: ""         # 邮箱
+  location: "🇨🇳"                      # 位置
   links:                                # 社交链接
-    - label: "GitHub"
-      icon: "fab fa-github"
-      url: "https://github.com/pengjunlong"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://pengjunlong.github.io"
@@ -67,11 +63,6 @@ footer:
 # 分页配置
 paginate: 5             # 每页显示文章数
 paginate_path: "/blog/page:num" # 分页路径格式
-
-# 搜索功能
-search: true            # 启用搜索
-search_provider: "lunr" # 搜索提供者(lunr, algolia)
-search_full_content: true
 
 # SEO优化
 seo:
