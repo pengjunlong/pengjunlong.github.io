@@ -26,13 +26,9 @@
 
   // ── 状态 ───────────────────────────────────────────────
   let allSubsites  = [];   // 所有加载成功的子站
-  let activeTag    = 'all';
-  let searchKeyword = '';
-  let sortMode     = 'default';
 
   // ── DOM 引用（DOMContentLoaded 后赋值）──────────────────
-  let container, loadingEl, errorEl, errorMsgEl, retryBtn, emptyEl,
-      searchInput, searchClear, tagFiltersEl, sortSelect;
+  let container, loadingEl, errorEl, errorMsgEl, retryBtn;
 
   // ── 工具函数 ────────────────────────────────────────────
 
@@ -100,33 +96,6 @@
 
   // ── 渲染 ────────────────────────────────────────────────
 
-  /** 渲染标签过滤器 */
-  function renderTagFilters(subsites) {
-    const allTags = new Set();
-    subsites.forEach(s => (s.tags || []).forEach(t => allTags.add(t)));
-
-    // 清空旧标签（保留"全部"按钮）
-    tagFiltersEl.innerHTML = '<button class="tag-btn tag-btn--active" data-tag="all">全部</button>';
-
-    allTags.forEach(tag => {
-      const btn = document.createElement('button');
-      btn.className = 'tag-btn';
-      btn.dataset.tag = tag;
-      btn.textContent = tag;
-      tagFiltersEl.appendChild(btn);
-    });
-
-    // 绑定点击
-    tagFiltersEl.querySelectorAll('.tag-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeTag = btn.dataset.tag;
-        tagFiltersEl.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('tag-btn--active'));
-        btn.classList.add('tag-btn--active');
-        renderCards();
-      });
-    });
-  }
-
   /** 构建单张卡片 HTML */
   function buildCard(config) {
     const accentColor = config.color || hashColor(config.displayName || config.repoName || '');
@@ -152,52 +121,21 @@
       </a>`;
   }
 
-  /** 根据当前过滤/搜索/排序渲染卡片列表 */
+  /** 渲染卡片列表（按 order + 名称排序） */
   function renderCards() {
-    let list = allSubsites.slice();
+    allSubsites.sort((a, b) => {
+      const oa = a.order !== undefined ? a.order : 999;
+      const ob = b.order !== undefined ? b.order : 999;
+      if (oa !== ob) return oa - ob;
+      return (a.displayName || '').localeCompare(b.displayName || '', 'zh');
+    });
 
-    // 标签过滤
-    if (activeTag && activeTag !== 'all') {
-      list = list.filter(s => (s.tags || []).includes(activeTag));
-    }
-
-    // 搜索过滤
-    if (searchKeyword) {
-      const kw = searchKeyword.toLowerCase();
-      list = list.filter(s =>
-        (s.displayName || '').toLowerCase().includes(kw) ||
-        (s.description || '').toLowerCase().includes(kw) ||
-        (s.repoName || '').toLowerCase().includes(kw)
-      );
-    }
-
-    // 排序
-    if (sortMode === 'name') {
-      list.sort((a, b) => (a.displayName || '').localeCompare(b.displayName || '', 'zh'));
-    } else if (sortMode === 'updated') {
-      list.sort((a, b) => new Date(b.updated) - new Date(a.updated));
-    } else {
-      // 默认：按 order 字段，再按名称
-      list.sort((a, b) => {
-        const oa = a.order !== undefined ? a.order : 999;
-        const ob = b.order !== undefined ? b.order : 999;
-        if (oa !== ob) return oa - ob;
-        return (a.displayName || '').localeCompare(b.displayName || '', 'zh');
-      });
-    }
-
-    if (list.length === 0) {
-      container.innerHTML = '';
-      emptyEl.style.display = '';
-    } else {
-      emptyEl.style.display = 'none';
-      container.innerHTML = list.map(buildCard).join('');
-      // 入场动画
-      container.querySelectorAll('.subsite-card').forEach((el, i) => {
-        el.style.animationDelay = `${i * 60}ms`;
-        el.classList.add('subsite-card--animate');
-      });
-    }
+    container.innerHTML = allSubsites.map(buildCard).join('');
+    // 入场动画
+    container.querySelectorAll('.subsite-card').forEach((el, i) => {
+      el.style.animationDelay = `${i * 60}ms`;
+      el.classList.add('subsite-card--animate');
+    });
   }
 
   // ── 主加载流程 ──────────────────────────────────────────
@@ -245,11 +183,7 @@
 
       loadingEl.style.display = 'none';
 
-      if (allSubsites.length === 0) {
-        emptyEl.style.display = '';
-        emptyEl.querySelector('p').textContent = '暂未发现可用子站点，请先在子仓库中添加 subsite-config.json';
-      } else {
-        renderTagFilters(allSubsites);
+      if (allSubsites.length > 0) {
         renderCards();
       }
 
@@ -261,53 +195,15 @@
     }
   }
 
-  // ── 全局暴露（供 HTML 内联调用）────────────────────────
-  window.resetSubsiteFilters = function () {
-    activeTag     = 'all';
-    searchKeyword = '';
-    sortMode      = 'default';
-    if (searchInput)  { searchInput.value = ''; searchClear.style.display = 'none'; }
-    if (sortSelect)   sortSelect.value = 'default';
-    tagFiltersEl.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('tag-btn--active'));
-    const allBtn = tagFiltersEl.querySelector('[data-tag="all"]');
-    if (allBtn) allBtn.classList.add('tag-btn--active');
-    emptyEl.style.display = 'none';
-    renderCards();
-  };
-
   // ── 初始化 ──────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
-    container    = document.getElementById('subsites-container');
-    loadingEl    = document.getElementById('subsites-loading');
-    errorEl      = document.getElementById('subsites-error');
-    errorMsgEl   = document.getElementById('subsites-error-msg');
-    retryBtn     = document.getElementById('subsites-retry');
-    emptyEl      = document.getElementById('subsites-empty');
-    searchInput  = document.getElementById('subsite-search');
-    searchClear  = document.getElementById('subsite-search-clear');
-    tagFiltersEl = document.getElementById('subsite-tag-filters');
-    sortSelect   = document.getElementById('subsite-sort');
+    container  = document.getElementById('subsites-container');
+    loadingEl  = document.getElementById('subsites-loading');
+    errorEl    = document.getElementById('subsites-error');
+    errorMsgEl = document.getElementById('subsites-error-msg');
+    retryBtn   = document.getElementById('subsites-retry');
 
     if (!container) return; // 不在子站导航页则跳过
-
-    // 搜索
-    searchInput.addEventListener('input', () => {
-      searchKeyword = searchInput.value.trim();
-      searchClear.style.display = searchKeyword ? '' : 'none';
-      renderCards();
-    });
-    searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      searchKeyword = '';
-      searchClear.style.display = 'none';
-      renderCards();
-    });
-
-    // 排序
-    sortSelect.addEventListener('change', () => {
-      sortMode = sortSelect.value;
-      renderCards();
-    });
 
     // 重试
     retryBtn.addEventListener('click', loadSubsites);

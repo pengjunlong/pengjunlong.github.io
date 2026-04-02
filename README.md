@@ -4,7 +4,7 @@
 [![Jekyll](https://img.shields.io/badge/Jekyll-minimal--mistakes-blue)](https://github.com/mmistakes/minimal-mistakes)
 [![License](https://img.shields.io/badge/License-MIT-orange.svg)](LICENSE)
 
-> 基于 GitHub Pages + Jekyll 构建的个人主站，自动发现并聚合所有子仓库站点，支持搜索过滤、标签分类、排序等功能。
+> 基于 GitHub Pages + Jekyll 构建的个人主站，使用 Minimal Mistakes 主题，自动发现并聚合所有子仓库站点。
 
 ---
 
@@ -12,12 +12,10 @@
 
 - 🌀 **自动发现** — 通过 GitHub API 动态加载所有启用 Pages 的子仓库
 - 🧩 **模块化接入** — 子仓库只需放一个 `subsite-config.json` 即可被收录
-- 🔍 **实时搜索** — 按站点名称 / 描述实时过滤
-- 🏷️ **标签分类** — 多标签过滤，快速定位内容
-- 📊 **灵活排序** — 支持默认权重、名称、最近更新三种排序
-- 🎨 **明亮主题** — air 皮肤 + 自定义蓝紫渐变配色，响应式适配全设备
+- 🎨 **统一主题** — 使用 Minimal Mistakes `air` 皮肤，无额外自定义 CSS
 - ⚡ **智能缓存** — 本地 localStorage 缓存 1 小时，减少 API 调用
 - 🔄 **自动重试** — fetch 失败自动退避重试，网络异常更健壮
+- 📱 **响应式适配** — 适配桌面端与移动设备
 
 ---
 
@@ -25,20 +23,18 @@
 
 ```
 pengjunlong.github.io/
-├── _config.yml               # Jekyll 站点配置（主题、作者、插件等）
+├── _config.yml                    # Jekyll 站点配置（主题、作者、插件等）
 ├── _data/
-│   └── navigation.yml        # 顶部导航菜单
+│   └── navigation.yml             # 顶部导航菜单
 ├── _includes/
 │   ├── head/
-│   │   └── custom.html       # 自定义 <head> 注入（CSS、meta）
-│   ├── analytics.html        # Google Analytics
-│   └── subsites-nav.html     # 子站导航区域模板
+│   │   └── custom.html            # <head> 补充（Open Graph 标签）
+│   ├── analytics.html             # Google Analytics
+│   └── subsites-nav.html          # 子站导航卡片模板（含内联样式）
 ├── assets/
-│   ├── css/
-│   │   └── custom.css        # 自定义样式（配色、动画、卡片）
 │   └── js/
-│       └── subsites-loader.js  # 子站点动态加载逻辑
-└── index.md                  # 首页
+│       └── subsites-loader.js     # 子站点动态加载逻辑
+└── index.md                       # 首页
 ```
 
 ---
@@ -63,7 +59,7 @@ pengjunlong.github.io/
 | `displayName` | string | ✅ | 卡片显示名称 |
 | `description` | string | ✅ | 站点简介（最多2行展示） |
 | `icon` | string | ❌ | emoji（如 `🚀`）或 Font Awesome 类名（如 `fas fa-rocket`） |
-| `tags` | string[] | ❌ | 分类标签，用于过滤筛选 |
+| `tags` | string[] | ❌ | 分类标签，展示在卡片上 |
 | `color` | string | ❌ | 卡片主题色（hex），不填则自动按名称分配色板色 |
 | `order` | number | ❌ | 排序权重，数字越小越靠前，默认 999 |
 
@@ -117,17 +113,18 @@ author:
 | `default` | 经典 |
 | `dark` | 暗色 |
 
-### 自定义配色（`assets/css/custom.css`）
+### 修改导航菜单（`_data/navigation.yml`）
 
-文件顶部的 CSS 变量控制全局配色：
-
-```css
-:root {
-  --brand-primary:   #4F8EF7;   /* 主蓝 */
-  --brand-secondary: #6C63FF;   /* 紫 */
-  --brand-accent:    #FF6B6B;   /* 暖红 */
-  --brand-warm:      #FFCD3C;   /* 暖黄 */
-}
+```yaml
+main:
+  - title: "🏠 首页"
+    url: /
+  - title: "📚 博客"
+    url: /blog/
+  - title: "🚀 子站点"
+    url: /#subsites
+  - title: "👤 关于"
+    url: /about/
 ```
 
 ---

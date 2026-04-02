@@ -32,10 +32,6 @@ sass:
   sass_dir: _sass
   style: compressed
 
-# 头部自定义脚本/样式（通过 head_scripts 注入）
-head_scripts:
-  - /assets/css/custom.css
-
 # 默认布局
 defaults:
   - scope:
